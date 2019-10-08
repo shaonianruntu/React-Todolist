@@ -4,7 +4,7 @@
  * @Github:
  * @Date: 2019-10-07 10:42:26
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-08 16:08:49
+ * @LastEditTime: 2019-10-08 16:12:47
  */
 import React, { Component, Fragment } from "react";
 import axios from "axios";
@@ -48,6 +48,7 @@ class TodoList extends Component {
   // 只执行一次
   componentDidMount() {
     // 新版本 Charles Local Map 404 的解决方法：https://segmentfault.com/a/1190000018765258?utm_source=tag-newest
+    // 在浏览器中访问 React 项目时，也需要使用 http://http://localhost.charlesproxy.com:3000 的域名来访问才能实现。
     axios
       .get("api/todolist")
       .then(res => {
