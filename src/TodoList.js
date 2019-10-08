@@ -4,21 +4,24 @@
  * @Github:
  * @Date: 2019-10-07 10:42:26
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-08 16:12:47
+ * @LastEditTime: 2019-10-08 17:35:22
  */
 import React, { Component, Fragment } from "react";
+import { Input, Button, List } from "antd";
+
 import axios from "axios";
 import TodoItem from "./TodoItem";
 
+import "antd/dist/antd.css";
 import "./style.css";
+
+import store from "./store/index";
 
 class TodoList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      inputValue: "",
-      list: []
-    };
+    this.state = store.getState();
+    console.log(this.state);
     // 把作用域绑定放在首部，只绑定一次，可以提升性能
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleBtnClick = this.handleBtnClick.bind(this);
@@ -28,20 +31,33 @@ class TodoList extends Component {
 
   render() {
     return (
-      <Fragment>
+      <div style={{ marginTop: "10px", marginLeft: "10px" }}>
         <div>
           <label htmlFor="insertArea">Input Content: </label>
-          <input
+          {/* <input
             id="insertArea"
             className="input"
             type="text"
             value={this.state.inputValue}
             onChange={this.handleInputChange}
-          />
-          <button onClick={this.handleBtnClick}>Submit</button>
+          /> */}
+
+          {/* <button onClick={this.handleBtnClick}>Submit</button> */}
+          <Input
+            value={this.state.inputValue}
+            placeholder="todo info"
+            style={{ width: "300px", marginRight: "10px" }}
+          ></Input>
+          <Button type="primary">Submit</Button>
         </div>
-        <ul>{this.getTodoItem()}</ul>
-      </Fragment>
+        <List
+          style={{ marginTop: "10px", width: "393px" }}
+          bordered
+          dataSource={this.state.list}
+          renderItem={item => <List.Item>{item}</List.Item>}
+        />
+        {/* <ul>{this.getTodoItem()}</ul> */}
+      </div>
     );
   }
 
@@ -49,17 +65,17 @@ class TodoList extends Component {
   componentDidMount() {
     // 新版本 Charles Local Map 404 的解决方法：https://segmentfault.com/a/1190000018765258?utm_source=tag-newest
     // 在浏览器中访问 React 项目时，也需要使用 http://http://localhost.charlesproxy.com:3000 的域名来访问才能实现。
-    axios
-      .get("api/todolist")
-      .then(res => {
-        console.log(res.data);
-        this.setState(() => ({
-          list: [...res.data]
-        }));
-      })
-      .catch(() => {
-        alert("error");
-      });
+    // axios
+    //   .get("api/todolist")
+    //   .then(res => {
+    //     console.log(res.data);
+    //     this.setState(() => ({
+    //       list: [...res.data]
+    //     }));
+    //   })
+    //   .catch(() => {
+    //     alert("error");
+    //   });
   }
 
   getTodoItem() {
