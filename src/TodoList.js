@@ -4,10 +4,10 @@
  * @Github:
  * @Date: 2019-10-07 10:42:26
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-08 15:05:25
+ * @LastEditTime: 2019-10-08 16:08:49
  */
 import React, { Component, Fragment } from "react";
-
+import axios from "axios";
 import TodoItem from "./TodoItem";
 
 import "./style.css";
@@ -19,6 +19,7 @@ class TodoList extends Component {
       inputValue: "",
       list: []
     };
+    // 把作用域绑定放在首部，只绑定一次，可以提升性能
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleBtnClick = this.handleBtnClick.bind(this);
     this.handleItemDelete = this.handleItemDelete.bind(this);
@@ -42,6 +43,22 @@ class TodoList extends Component {
         <ul>{this.getTodoItem()}</ul>
       </Fragment>
     );
+  }
+
+  // 只执行一次
+  componentDidMount() {
+    // 新版本 Charles Local Map 404 的解决方法：https://segmentfault.com/a/1190000018765258?utm_source=tag-newest
+    axios
+      .get("api/todolist")
+      .then(res => {
+        console.log(res.data);
+        this.setState(() => ({
+          list: [...res.data]
+        }));
+      })
+      .catch(() => {
+        alert("error");
+      });
   }
 
   getTodoItem() {
@@ -70,6 +87,7 @@ class TodoList extends Component {
   handleInputChange(e) {
     const value = e.target.value;
     // 当把 setSate 对象变成函数的时候，函数是异步的，需要先定义一个变量来传递。
+    // setState 使用异步函数，可以提高性能
     this.setState(() => ({
       inputValue: value
     }));
