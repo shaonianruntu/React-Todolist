@@ -4,9 +4,10 @@
  * @Github:
  * @Date: 2019-10-07 10:42:26
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-07 11:13:06
+ * @LastEditTime: 2019-10-08 13:06:55
  */
 import React, { Component } from "react";
+import "./style.css";
 
 class TodoList extends Component {
   constructor(props) {
@@ -23,7 +24,10 @@ class TodoList extends Component {
     return (
       <div>
         <div>
+          <label htmlFor="insertArea">Input Content: </label>
           <input
+            id="insertArea"
+            className="input"
             type="text"
             value={this.state.inputValue}
             onChange={this.handleInputChange}
@@ -33,9 +37,14 @@ class TodoList extends Component {
         <ul>
           {this.state.list.map((item, index) => {
             // 由于 React 的虚拟 DOM 的 diff 算法，将 key 设置为 item 会较 index 更高效很多。
+            // dangerouslySetInnerHTML 保留输入文本的 HTML 样式。
             return (
-              <li key={item} onClick={this.handleItemDelete.bind(this, index)}>
-                {item}
+              <li
+                key={item}
+                onClick={this.handleItemDelete.bind(this, index)}
+                dangerouslySetInnerHTML={{ __html: item }}
+              >
+                {/* {item} */}
               </li>
             );
           })}
