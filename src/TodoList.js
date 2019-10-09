@@ -4,10 +4,15 @@
  * @Github:
  * @Date: 2019-10-07 10:42:26
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-09 13:30:26
+ * @LastEditTime: 2019-10-09 13:38:44
  */
 import React, { Component, Fragment } from "react";
 import { Input, Button, List } from "antd";
+import {
+  CHANGE_INPUT_VALUE,
+  ADD_TODO_ITEM,
+  DELETE_TODO_ITEM
+} from "./store/actionTypes";
 
 import axios from "axios";
 import TodoItem from "./TodoItem";
@@ -112,7 +117,7 @@ class TodoList extends Component {
 
   handleInputChange(e) {
     const action = {
-      type: "change_input_value",
+      type: CHANGE_INPUT_VALUE,
       value: e.target.value
     };
 
@@ -128,7 +133,7 @@ class TodoList extends Component {
 
   handleBtnClick() {
     const action = {
-      type: "add_todo_item"
+      type: ADD_TODO_ITEM
     };
     store.dispatch(action);
 
@@ -141,7 +146,7 @@ class TodoList extends Component {
 
   handleItemDelete(index) {
     const action = {
-      type: "delete_todo_item",
+      type: DELETE_TODO_ITEM,
       index: index
     };
     store.dispatch(action);
