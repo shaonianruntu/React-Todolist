@@ -4,7 +4,7 @@
  * @Github:
  * @Date: 2019-10-09 13:42:02
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-09 15:17:33
+ * @LastEditTime: 2019-10-09 16:03:35
  */
 import axios from "axios";
 
@@ -12,9 +12,9 @@ import {
   CHANGE_INPUT_VALUE,
   ADD_TODO_ITEM,
   DELETE_TODO_ITEM,
-  INIT_LIST_ACTION
+  INIT_LIST_ACTION,
+  GET_INIT_LIST
 } from "./actionTypes";
-import store from ".";
 
 export const getInputChangeAction = value => ({
   type: CHANGE_INPUT_VALUE,
@@ -33,6 +33,10 @@ export const getDeleteItemAction = index => ({
 export const initListAction = data => ({
   type: INIT_LIST_ACTION,
   data: data
+});
+
+export const getInitList = () => ({
+  type: GET_INIT_LIST
 });
 
 export const getTodoList = () => {

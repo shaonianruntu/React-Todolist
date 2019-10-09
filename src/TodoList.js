@@ -4,7 +4,7 @@
  * @Github:
  * @Date: 2019-10-07 10:42:26
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-09 15:15:44
+ * @LastEditTime: 2019-10-09 16:07:50
  */
 import React, { Component } from "react";
 import TodoListUI from "./TodoListUI";
@@ -13,7 +13,7 @@ import {
   getInputChangeAction,
   getAddItemAction,
   getDeleteItemAction,
-  getTodoList
+  getInitList
 } from "./store/actionCreators";
 
 import "antd/dist/antd.css";
@@ -50,8 +50,9 @@ class TodoList extends Component {
   componentDidMount() {
     // 新版本 Charles Local Map 404 的解决方法：https://segmentfault.com/a/1190000018765258?utm_source=tag-newest
     // 在浏览器中访问 React 项目时，也需要使用 http://http://localhost.charlesproxy.com:3000 的域名来访问才能实现。
-    const action = getTodoList();
-    store.dispatch(action); // 如果 action 是一个函数，那么 store.dispatch 就是直接执行这个函数
+
+    const action = getInitList();
+    store.dispatch(action);
   }
 
   handleInputChange(e) {
