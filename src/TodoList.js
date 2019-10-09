@@ -4,7 +4,7 @@
  * @Github:
  * @Date: 2019-10-07 10:42:26
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-08 17:35:22
+ * @LastEditTime: 2019-10-09 09:32:04
  */
 import React, { Component, Fragment } from "react";
 import { Input, Button, List } from "antd";
@@ -21,7 +21,9 @@ class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = store.getState();
-    console.log(this.state);
+    this.handleStoreChange = this.handleStoreChange.bind(this);
+    store.subscribe(this.handleStoreChange);
+
     // 把作用域绑定放在首部，只绑定一次，可以提升性能
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleBtnClick = this.handleBtnClick.bind(this);
@@ -47,8 +49,11 @@ class TodoList extends Component {
             value={this.state.inputValue}
             placeholder="todo info"
             style={{ width: "300px", marginRight: "10px" }}
+            onChange={this.handleInputChange}
           ></Input>
-          <Button type="primary">Submit</Button>
+          <Button type="primary" onClick={this.handleBtnClick}>
+            Submit
+          </Button>
         </div>
         <List
           style={{ marginTop: "10px", width: "393px" }}
@@ -102,28 +107,32 @@ class TodoList extends Component {
   }
 
   handleInputChange(e) {
-    const value = e.target.value;
+    const action = {
+      type: "change_input_value",
+      value: e.target.value
+    };
+
+    store.dispatch(action);
+
+    // const value = e.target.value;
     // 当把 setSate 对象变成函数的时候，函数是异步的，需要先定义一个变量来传递。
     // setState 使用异步函数，可以提高性能
-    this.setState(() => ({
-      inputValue: value
-    }));
-    // this.setState({
-    //   inputValue: e.target.value
-    // });
+    // this.setState(() => ({
+    //   inputValue: value
+    // }));
   }
 
   handleBtnClick() {
-    // prevState == this.state
-    this.setState(prevState => ({
-      inputValue: "",
-      list: [...prevState.list, prevState.inputValue]
-    }));
+    const action = {
+      type: "add_todo_item"
+    };
+    store.dispatch(action);
 
-    // this.setState({
+    // prevState == this.state
+    // this.setState(prevState => ({
     //   inputValue: "",
-    //   list: [...this.state.list, this.state.inputValue]
-    // });
+    //   list: [...prevState.list, prevState.inputValue]
+    // }));
   }
 
   handleItemDelete(index) {
@@ -132,15 +141,10 @@ class TodoList extends Component {
       list.splice(index, 1);
       return { list: list };
     });
+  }
 
-    // const list = [...this.state.list];
-    // list.splice(index, 1);
-    // this.setState(() => ({
-    //   list: list
-    // }));
-    // this.setState({
-    //   list: list
-    // });
+  handleStoreChange() {
+    this.setState(store.getState());
   }
 }
 

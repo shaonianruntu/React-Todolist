@@ -1,17 +1,32 @@
+import ActionButton from "antd/lib/modal/ActionButton";
+
 /*
  * @Description:
  * @Author: fangn
  * @Github:
  * @Date: 2019-10-08 17:28:02
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-08 17:33:26
+ * @LastEditTime: 2019-10-09 09:36:45
  */
 const defaultState = {
   inputValue: "123",
   list: [1, 2]
 };
 
+// reducer 可以接受 state，但是绝对不能修改 state
 export default (state = defaultState, action) => {
+  if (action.type === "change_input_value") {
+    const newState = JSON.parse(JSON.stringify(state)); // 深拷贝
+    newState.inputValue = action.value;
+    return newState;
+  }
+  if (action.type === "add_todo_item") {
+    const newState = JSON.parse(JSON.stringify(state)); // 深拷贝
+    newState.list.push(newState.inputValue);
+    newState.inputValue = "";
+    return newState;
+  }
+
   return state;
 };
 
