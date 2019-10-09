@@ -4,12 +4,13 @@
  * @Github:
  * @Date: 2019-10-08 17:28:02
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-09 13:55:06
+ * @LastEditTime: 2019-10-09 14:37:01
  */
 import {
   CHANGE_INPUT_VALUE,
   ADD_TODO_ITEM,
-  DELETE_TODO_ITEM
+  DELETE_TODO_ITEM,
+  INIT_LIST_ACTION
 } from "./actionTypes";
 
 const defaultState = {
@@ -34,6 +35,11 @@ export default (state = defaultState, action) => {
   if (action.type === DELETE_TODO_ITEM) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.list.splice(action.index, 1);
+    return newState;
+  }
+  if (action.type === INIT_LIST_ACTION) {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.list = action.data;
     return newState;
   }
   return state;

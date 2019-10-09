@@ -4,7 +4,7 @@
  * @Github:
  * @Date: 2019-10-09 13:57:57
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-09 14:28:27
+ * @LastEditTime: 2019-10-09 15:18:08
  */
 import React from "react";
 import { Input, Button, List } from "antd";
@@ -41,7 +41,7 @@ const TodoListUI = props => {
         dataSource={props.list}
         renderItem={(item, index) => (
           <List.Item
-            onClick={index => {
+            onClick={() => {
               props.handleItemDelete(index);
             }}
           >
