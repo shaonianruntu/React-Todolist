@@ -6,7 +6,7 @@ import ActionButton from "antd/lib/modal/ActionButton";
  * @Github:
  * @Date: 2019-10-08 17:28:02
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-09 09:36:45
+ * @LastEditTime: 2019-10-09 13:31:26
  */
 const defaultState = {
   inputValue: "123",
@@ -26,7 +26,11 @@ export default (state = defaultState, action) => {
     newState.inputValue = "";
     return newState;
   }
-
+  if (action.type === "delete_todo_item") {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.list.splice(action.index, 1);
+    return newState;
+  }
   return state;
 };
 

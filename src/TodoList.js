@@ -4,7 +4,7 @@
  * @Github:
  * @Date: 2019-10-07 10:42:26
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-09 09:32:04
+ * @LastEditTime: 2019-10-09 13:30:26
  */
 import React, { Component, Fragment } from "react";
 import { Input, Button, List } from "antd";
@@ -59,7 +59,11 @@ class TodoList extends Component {
           style={{ marginTop: "10px", width: "393px" }}
           bordered
           dataSource={this.state.list}
-          renderItem={item => <List.Item>{item}</List.Item>}
+          renderItem={(item, index) => (
+            <List.Item onClick={this.handleItemDelete.bind(this, index)}>
+              {item}
+            </List.Item>
+          )}
         />
         {/* <ul>{this.getTodoItem()}</ul> */}
       </div>
@@ -136,11 +140,17 @@ class TodoList extends Component {
   }
 
   handleItemDelete(index) {
-    this.setState(prevState => {
-      const list = [...prevState.list];
-      list.splice(index, 1);
-      return { list: list };
-    });
+    const action = {
+      type: "delete_todo_item",
+      index: index
+    };
+    store.dispatch(action);
+
+    // this.setState(prevState => {
+    //   const list = [...prevState.list];
+    //   list.splice(index, 1);
+    //   return { list: list };
+    // });
   }
 
   handleStoreChange() {
