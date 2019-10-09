@@ -4,15 +4,16 @@
  * @Github:
  * @Date: 2019-10-07 10:42:26
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-09 13:38:44
+ * @LastEditTime: 2019-10-09 13:49:09
  */
 import React, { Component, Fragment } from "react";
 import { Input, Button, List } from "antd";
+
 import {
-  CHANGE_INPUT_VALUE,
-  ADD_TODO_ITEM,
-  DELETE_TODO_ITEM
-} from "./store/actionTypes";
+  getInputChangeAction,
+  getAddItemAction,
+  getDeleteItemAction
+} from "./store/actionCreators";
 
 import axios from "axios";
 import TodoItem from "./TodoItem";
@@ -116,11 +117,11 @@ class TodoList extends Component {
   }
 
   handleInputChange(e) {
-    const action = {
-      type: CHANGE_INPUT_VALUE,
-      value: e.target.value
-    };
-
+    // const action = {
+    //   type: CHANGE_INPUT_VALUE,
+    //   value: e.target.value
+    // };
+    const action = getInputChangeAction(e.target.value);
     store.dispatch(action);
 
     // const value = e.target.value;
@@ -132,9 +133,10 @@ class TodoList extends Component {
   }
 
   handleBtnClick() {
-    const action = {
-      type: ADD_TODO_ITEM
-    };
+    // const action = {
+    //   type: ADD_TODO_ITEM
+    // };
+    const action = getAddItemAction();
     store.dispatch(action);
 
     // prevState == this.state
@@ -145,10 +147,11 @@ class TodoList extends Component {
   }
 
   handleItemDelete(index) {
-    const action = {
-      type: DELETE_TODO_ITEM,
-      index: index
-    };
+    // const action = {
+    //   type: DELETE_TODO_ITEM,
+    //   index: index
+    // };
+    const action = getDeleteItemAction(index);
     store.dispatch(action);
 
     // this.setState(prevState => {
