@@ -4,10 +4,10 @@
  * @Github:
  * @Date: 2019-10-07 10:42:26
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-09 13:49:09
+ * @LastEditTime: 2019-10-09 14:11:30
  */
-import React, { Component, Fragment } from "react";
-import { Input, Button, List } from "antd";
+import React, { Component } from "react";
+import TodoListUI from "./TodoListUI";
 
 import {
   getInputChangeAction,
@@ -39,40 +39,13 @@ class TodoList extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: "10px", marginLeft: "10px" }}>
-        <div>
-          <label htmlFor="insertArea">Input Content: </label>
-          {/* <input
-            id="insertArea"
-            className="input"
-            type="text"
-            value={this.state.inputValue}
-            onChange={this.handleInputChange}
-          /> */}
-
-          {/* <button onClick={this.handleBtnClick}>Submit</button> */}
-          <Input
-            value={this.state.inputValue}
-            placeholder="todo info"
-            style={{ width: "300px", marginRight: "10px" }}
-            onChange={this.handleInputChange}
-          ></Input>
-          <Button type="primary" onClick={this.handleBtnClick}>
-            Submit
-          </Button>
-        </div>
-        <List
-          style={{ marginTop: "10px", width: "393px" }}
-          bordered
-          dataSource={this.state.list}
-          renderItem={(item, index) => (
-            <List.Item onClick={this.handleItemDelete.bind(this, index)}>
-              {item}
-            </List.Item>
-          )}
-        />
-        {/* <ul>{this.getTodoItem()}</ul> */}
-      </div>
+      <TodoListUI
+        inputValue={this.state.inputValue}
+        list={this.state.list}
+        handleInputChange={this.handleInputChange}
+        handleBtnClick={this.handleBtnClick}
+        handleItemDelete={this.handleItemDelete}
+      ></TodoListUI>
     );
   }
 
@@ -151,6 +124,7 @@ class TodoList extends Component {
     //   type: DELETE_TODO_ITEM,
     //   index: index
     // };
+    console.log(index);
     const action = getDeleteItemAction(index);
     store.dispatch(action);
 

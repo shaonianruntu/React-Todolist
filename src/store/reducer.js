@@ -4,7 +4,7 @@
  * @Github:
  * @Date: 2019-10-08 17:28:02
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-09 13:39:18
+ * @LastEditTime: 2019-10-09 13:55:06
  */
 import {
   CHANGE_INPUT_VALUE,
@@ -18,6 +18,7 @@ const defaultState = {
 };
 
 // reducer 可以接受 state，但是绝对不能修改 state
+// 纯函数指的是，给定固定的输入，就一定会有固定的输出，而且不会有任何副作用。
 export default (state = defaultState, action) => {
   if (action.type === CHANGE_INPUT_VALUE) {
     const newState = JSON.parse(JSON.stringify(state)); // 深拷贝
