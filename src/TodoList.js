@@ -2,77 +2,52 @@
  * @Description:
  * @Author: fangn
  * @Github:
- * @Date: 2019-10-07 10:42:26
+ * @Date: 2019-10-10 08:49:12
  * @LastEditors: fangn
- * @LastEditTime: 2019-10-09 16:07:50
+ * @LastEditTime: 2019-10-10 09:26:27
  */
 import React, { Component } from "react";
-import TodoListUI from "./TodoListUI";
-
-import {
-  getInputChangeAction,
-  getAddItemAction,
-  getDeleteItemAction,
-  getInitList
-} from "./store/actionCreators";
-
-import "antd/dist/antd.css";
-import "./style.css";
-
-import store from "./store/index";
+import { connect } from "react-redux";
 
 class TodoList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = store.getState();
-    this.handleStoreChange = this.handleStoreChange.bind(this);
-    store.subscribe(this.handleStoreChange);
-
-    // 把作用域绑定放在首部，只绑定一次，可以提升性能
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleBtnClick = this.handleBtnClick.bind(this);
-    this.handleItemDelete = this.handleItemDelete.bind(this);
-  }
-
   render() {
     return (
-      <TodoListUI
-        inputValue={this.state.inputValue}
-        list={this.state.list}
-        handleInputChange={this.handleInputChange}
-        handleBtnClick={this.handleBtnClick}
-        handleItemDelete={this.handleItemDelete}
-      ></TodoListUI>
+      <div>
+        <div>
+          <input
+            type="text"
+            value={this.props.inputValue}
+            onChange={this.props.handleInputChange}
+          />
+          <button>Submit</button>
+        </div>
+        <ul>
+          <li>Dell</li>
+        </ul>
+      </div>
     );
-  }
-
-  // 只执行一次
-  componentDidMount() {
-    // 新版本 Charles Local Map 404 的解决方法：https://segmentfault.com/a/1190000018765258?utm_source=tag-newest
-    // 在浏览器中访问 React 项目时，也需要使用 http://http://localhost.charlesproxy.com:3000 的域名来访问才能实现。
-
-    const action = getInitList();
-    store.dispatch(action);
-  }
-
-  handleInputChange(e) {
-    const action = getInputChangeAction(e.target.value);
-    store.dispatch(action);
-  }
-
-  handleBtnClick() {
-    const action = getAddItemAction();
-    store.dispatch(action);
-  }
-
-  handleItemDelete(index) {
-    const action = getDeleteItemAction(index);
-    store.dispatch(action);
-  }
-
-  handleStoreChange() {
-    this.setState(store.getState());
   }
 }
 
-export default TodoList;
+const mapStateToProps = state => {
+  return {
+    inputValue: state.inputValue
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleInputChange(e) {
+      const action = {
+        type: "change_input_value",
+        value: e.target.value
+      };
+      dispatch(action);
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoList);
