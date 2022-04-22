@@ -1,4 +1,4 @@
-# Todolist Implemented With React Framework
+# Todolist implemented with React framework
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
